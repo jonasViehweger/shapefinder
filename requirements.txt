@@ -1,0 +1,6 @@
+pandas
+geopandas
+psycopg3
+beautifulsoup4
+requests
+ipykernel
