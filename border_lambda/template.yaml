@@ -23,9 +23,19 @@ Resources:
             Tracing: Active
             Events:
                 Adm0Path:
-                    Type: Api # More info about API Event Source: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-api.html
+                    Type: Api 
                     Properties:
                         Path: /adm0/{iso}
+                        Method: GET
+                Adm1Path:
+                    Type: Api 
+                    Properties:
+                        Path: /adm1/{adm1_id}
+                        Method: GET
+                OrgPath:
+                    Type: Api 
+                    Properties:
+                        Path: /org/{org_id}
                         Method: GET
              # Powertools for AWS Lambda (Python) env vars: https://awslabs.github.io/aws-lambda-powertools-python/#environment-variables
             Environment:

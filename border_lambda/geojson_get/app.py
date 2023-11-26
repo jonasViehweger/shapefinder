@@ -34,6 +34,30 @@ def get_adm0_by_iso(iso: str):
     logger.info("Adm0 API - HTTP 200")
     return {"message": db.get_feature(adm="adm0", id=iso)}
 
+@app.get("/adm1/<adm1_id>")
+@tracer.capture_method
+def get_adm1_by_id(adm1_id: str):
+    # adding custom metrics
+    # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/metrics/
+    metrics.add_metric(name="Adm1Invocations", unit=MetricUnit.Count, value=1)
+
+    # structured log
+    # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/logger/
+    logger.info("Adm1 API - HTTP 200")
+    return {"message": db.get_feature(adm="adm1", id=adm1_id)}
+
+@app.get("/org/<org_id>")
+@tracer.capture_method
+def get_adm1_by_id(org_id: str):
+    # adding custom metrics
+    # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/metrics/
+    metrics.add_metric(name="OrgInvocations", unit=MetricUnit.Count, value=1)
+
+    # structured log
+    # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/logger/
+    logger.info("Org API - HTTP 200")
+    return {"message": db.get_org(org_id)}
+
 # Enrich logging with contextual information from Lambda
 @logger.inject_lambda_context(correlation_id_path=correlation_paths.API_GATEWAY_REST)
 # Adding tracer
