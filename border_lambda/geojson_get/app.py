@@ -48,7 +48,7 @@ def get_adm1_by_id(adm1_id: str):
 
 @app.get("/org/<org_id>")
 @tracer.capture_method
-def get_adm1_by_id(org_id: str):
+def get_org_by_id(org_id: str):
     # adding custom metrics
     # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/metrics/
     metrics.add_metric(name="OrgInvocations", unit=MetricUnit.Count, value=1)
