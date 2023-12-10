@@ -12,6 +12,16 @@ Globals: # https://docs.aws.amazon.com/serverless-application-model/latest/devel
         Runtime: python3.10
 
 Resources:
+    BorderApi:
+        Type: AWS::Serverless::Api
+        Description: "Serverless API for CRUD operations"
+        Properties:
+            StageName: "Prod"
+            Cors:
+                AllowMethods: "'GET,OPTIONS'"
+                AllowOrigin: "'*'"
+                AllowHeaders: "'Content-Type,access-control-allow-origin'"
+
     GeojsonGetFunction:
         Type: AWS::Serverless::Function # More info about Function Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
         Properties:
@@ -25,16 +35,19 @@ Resources:
                 Adm0Path:
                     Type: Api 
                     Properties:
+                        RestApiId: !Ref BorderApi
                         Path: /adm0/{iso}
                         Method: GET
                 Adm1Path:
                     Type: Api 
                     Properties:
+                        RestApiId: !Ref BorderApi
                         Path: /adm1/{adm1_id}
                         Method: GET
                 OrgPath:
                     Type: Api 
                     Properties:
+                        RestApiId: !Ref BorderApi
                         Path: /org/{org_id}
                         Method: GET
              # Powertools for AWS Lambda (Python) env vars: https://awslabs.github.io/aws-lambda-powertools-python/#environment-variables
@@ -56,7 +69,7 @@ Resources:
 Outputs:
     HelloWorldApi:
       Description: "API Gateway endpoint URL for Prod environment"
-      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello"
+      Value: !Sub "https://${BorderApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello"
 
     HelloWorldFunction:
       Description: "Geojson Get Lambda Function ARN"
