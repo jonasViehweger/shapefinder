@@ -1,4 +1,5 @@
 import './globals.css'
+import Link from 'next/link';
 
 export default function RootLayout({
     children,
@@ -7,7 +8,10 @@ export default function RootLayout({
   }) {
     return (
       <html lang="en">
-        <body>{children}</body>
+        <body>
+        <section><Link href="/adm0">Go to country selector.</Link></section>
+        <section>{children}</section>
+        </body>
       </html>
     )
   }

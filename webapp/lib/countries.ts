@@ -76,7 +76,7 @@ export var COUNTRIES: Country[] = [
   },
   {
     title: "Belgium",
-    value: "BE",
+    value: "BEL",
   },
   {
     title: "Belize",
