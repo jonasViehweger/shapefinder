@@ -36,6 +36,18 @@ def get_adm0_by_iso(iso: str):
     logger.info("Adm0 API - HTTP 200")
     return db.get_feature(adm="adm0", id=iso)
 
+@app.get("/adm0")
+@tracer.capture_method
+def get_adm0():
+    # adding custom metrics
+    # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/metrics/
+    metrics.add_metric(name="Adm0Invocations", unit=MetricUnit.Count, value=1)
+
+    # structured log
+    # See: https://awslabs.github.io/aws-lambda-powertools-python/latest/core/logger/
+    logger.info("Adm0 API - HTTP 200")
+    return db.get_list()
+
 @app.get("/adm1/<adm1_id>")
 @tracer.capture_method
 def get_adm1_by_id(adm1_id: str):

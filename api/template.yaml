@@ -1,77 +1,82 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-    sam-lam
+  sam-lam
 
-    Powertools for AWS Lambda (Python) example
+  Powertools for AWS Lambda (Python) example
 
 Globals: # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy-globals.html
-    Function:
-        Timeout: 100
-        MemorySize: 128
-        Runtime: python3.10
+  Function:
+    Timeout: 100
+    MemorySize: 128
+    Runtime: python3.10
 
 Resources:
-    BorderApi:
-        Type: AWS::Serverless::Api
-        Description: "Serverless API for CRUD operations"
-        Properties:
-            StageName: "Prod"
-            Cors:
-                AllowMethods: "'GET,OPTIONS'"
-                AllowOrigin: "'*'"
-                AllowHeaders: "'Content-Type,access-control-allow-origin'"
+  BorderApi:
+    Type: AWS::Serverless::Api
+    Description: "Serverless API for CRUD operations"
+    Properties:
+      StageName: "Prod"
+      Cors:
+        AllowMethods: "'GET,OPTIONS'"
+        AllowOrigin: "'*'"
+        AllowHeaders: "'Content-Type,access-control-allow-origin'"
 
-    GeojsonGetFunction:
-        Type: AWS::Serverless::Function # More info about Function Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
-        Properties:
-            Handler: app.lambda_handler
-            CodeUri: geojson_get
-            Description: Function to get geojsons from PostGIS database
-            Architectures:
-                - x86_64
-            Tracing: Active
-            Events:
-                Adm0Path:
-                    Type: Api 
-                    Properties:
-                        RestApiId: !Ref BorderApi
-                        Path: /adm0/{iso}
-                        Method: GET
-                Adm1Path:
-                    Type: Api 
-                    Properties:
-                        RestApiId: !Ref BorderApi
-                        Path: /adm1/{adm1_id}
-                        Method: GET
-                OrgPath:
-                    Type: Api 
-                    Properties:
-                        RestApiId: !Ref BorderApi
-                        Path: /org/{org_id}
-                        Method: GET
-             # Powertools for AWS Lambda (Python) env vars: https://awslabs.github.io/aws-lambda-powertools-python/#environment-variables
-            Environment:
-                Variables:
-                    POWERTOOLS_SERVICE_NAME: PowertoolsGeojson
-                    POWERTOOLS_METRICS_NAMESPACE: Powertools
-                    LOG_LEVEL: INFO
-            Tags:
-                LambdaPowertools: python
-            VpcConfig:
-                SecurityGroupIds:
-                    - sg-00e7bb19d907edb29
-                SubnetIds:
-                    - subnet-0ae9757e520841aaa
-                    - subnet-006891813ca71716c
-                    - subnet-03c3e41733b5b2ca1
+  GeojsonGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
+    Properties:
+      Handler: app.lambda_handler
+      CodeUri: geojson_get
+      Description: Function to get geojsons from PostGIS database
+      Architectures:
+        - x86_64
+      Tracing: Active
+      Events:
+        Adm0Path:
+          Type: Api
+          Properties:
+            RestApiId: !Ref BorderApi
+            Path: /adm0/{iso}
+            Method: GET
+        Adm1Path:
+          Type: Api
+          Properties:
+            RestApiId: !Ref BorderApi
+            Path: /adm1/{adm1_id}
+            Method: GET
+        OrgPath:
+          Type: Api
+          Properties:
+            RestApiId: !Ref BorderApi
+            Path: /org/{org_id}
+            Method: GET
+        Adm0:
+          Type: Api
+          Properties:
+            RestApiId: !Ref BorderApi
+            Path: /adm0
+            Method: GET
+        # Powertools for AWS Lambda (Python) env vars: https://awslabs.github.io/aws-lambda-powertools-python/#environment-variables
+      Environment:
+        Variables:
+          POWERTOOLS_SERVICE_NAME: PowertoolsGeojson
+          POWERTOOLS_METRICS_NAMESPACE: Powertools
+          LOG_LEVEL: INFO
+      Tags:
+        LambdaPowertools: python
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-00e7bb19d907edb29
+        SubnetIds:
+          - subnet-0ae9757e520841aaa
+          - subnet-006891813ca71716c
+          - subnet-03c3e41733b5b2ca1
 
 Outputs:
-    HelloWorldApi:
-      Description: "API Gateway endpoint URL for Prod environment"
-      Value: !Sub "https://${BorderApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello"
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for Prod environment"
+    Value: !Sub "https://${BorderApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello"
 
-    HelloWorldFunction:
-      Description: "Geojson Get Lambda Function ARN"
-      Value: !GetAtt GeojsonGetFunction.Arn
-
+  HelloWorldFunction:
+    Description: "Geojson Get Lambda Function ARN"
+    Value: !GetAtt GeojsonGetFunction.Arn

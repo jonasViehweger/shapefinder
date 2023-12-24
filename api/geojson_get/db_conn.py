@@ -38,6 +38,17 @@ class Database:
             self.cur.execute(query, [id])
             return self.cur.fetchone()[0]
 
+    def get_list(self):
+        query = sql.SQL("""
+            SELECT json_agg(json_build_object(
+                'title', english_name,
+                'value', id
+            )) FROM adm0;
+            """)
+        with self.conn.transaction():
+            self.cur.execute(query)
+            return self.cur.fetchone()[0]
+
     def get_features(self, adm, ids):
         where = sql.SQL("id = ANY(%s)")
         single = self.single_feature.format(

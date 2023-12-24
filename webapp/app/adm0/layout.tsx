@@ -8,7 +8,7 @@ import { COUNTRIES, Country, Countries } from "../../lib/countries";
 export default function SearchLayout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   // Default this to a country's code to preselect it
-  const [country, setCountry] = useState<Country["value"]>("BE");
+  const [country, setCountry] = useState<Country["value"]>("BEL");
 
   return (
     <div
@@ -25,12 +25,11 @@ export default function SearchLayout({ children }) {
           onChange={setCountry}
           selectedValue={COUNTRIES.find((option) => option?.value === country)}
         />
-        <Link
-          href={`/adm0/${country}`}>Link to your geojson</Link>
+        <Link href={`/adm0/${country}`}>Link to your geojson</Link>
       </div>
-      <section>
+      <div className="container mx-auto w-3/4 max-h-96 overflow-auto bg-slate-100 mt-6 p-6 rounded-md shadow-md">
         {children}
-      </section>
+      </div>
     </div>
   );
 }
