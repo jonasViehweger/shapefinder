@@ -8,8 +8,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 w-40 rounded-full mx-auto text-center mt-5">
+      <body className="min-h-screen w-screen bg-gradient-to-r from-indigo-50 to-rose-100">
+        <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 w-40 rounded-full mx-auto text-center mt-5 shadow-md">
           <Link href="/adm0">Countries</Link>
         </div>
         <section>{children}</section>

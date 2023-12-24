@@ -1,9 +1,8 @@
 import React from "react";
 export default function Page() {
-
   return (
     <section>
-      <h1>This is very cool.</h1>
+      <h1>Select a country.</h1>
     </section>
   );
 }

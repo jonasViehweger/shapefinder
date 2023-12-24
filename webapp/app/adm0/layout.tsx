@@ -12,22 +12,30 @@ export default function SearchLayout({ children }) {
 
   return (
     <div
-      className={"w-screen h-screen flex flex-col justify-center items-center"}
+      className={"w-screen h-screen flex flex-col fixed items-center top-72"}
     >
-      <div className={"w-96 px-5"}>
-        <label className="block text-sm font-medium text-gray-700">
-          Select a country
-        </label>
-        <CountrySelector
-          id={"country-selector"}
-          open={isOpen}
-          onToggle={() => setIsOpen(!isOpen)}
-          onChange={setCountry}
-          selectedValue={COUNTRIES.find((option) => option?.value === country)}
-        />
-        <Link href={`/adm0/${country}`}>Link to your geojson</Link>
+      <div className="w-96 px-5">
+        <div className="flex flex-row">
+          <div className="basis-3/4">
+            <CountrySelector
+              id={"country-selector"}
+              open={isOpen}
+              onToggle={() => setIsOpen(!isOpen)}
+              onChange={setCountry}
+              selectedValue={COUNTRIES.find(
+                (option) => option?.value === country
+              )}
+            />
+          </div>
+          <Link
+            href={`/adm0/${country}`}
+            className="relative basis-10 text-center ml-1 mt-1 bg-blue-500 text-white text-xl rounded-md align-bottom shadow-md hover:bg-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+          >
+            ›
+          </Link>
+        </div>
       </div>
-      <div className="container mx-auto w-3/4 max-h-96 overflow-auto bg-slate-100 mt-6 p-6 rounded-md shadow-md">
+      <div className="relative container mx-auto w-3/5 max-h-96 overflow-auto bg-white mt-6 rounded-md shadow-md font-mono font-medium text-sm text-center text-slate-500">
         {children}
       </div>
     </div>

@@ -1,4 +1,6 @@
 import { Suspense } from "react";
+import CopyButton from "../../../components/copyButton";
+import DownloadButton from "../../../components/donwloadButton";
 
 const appOrigin = "*"; //"https://d8qn3zfqpd0bq.cloudfront.net"
 
@@ -17,7 +19,12 @@ export default async function Results({ params }: { params: { id: string } }) {
   return (
     <Suspense>
       {" "}
-      <h1>{message}</h1>
+      <div className="sticky top-0 float-right space-x-4 p-5">
+        <CopyButton message={message} />
+        <DownloadButton message={message} />
+      </div>
+      <p className="clear-left m-5">{message}</p>
+      <div className="sticky bottom-0 bg-gradient-to-t from-white via h-20 w-full overflow-visible"></div>
     </Suspense>
   );
 }
