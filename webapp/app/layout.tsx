@@ -1,6 +1,13 @@
 import "./globals.css";
 import Link from "next/link";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shapefinder | Shapefiles and geometries of country borders",
+  description: "Find nice geometries",
+};
+
 export default function RootLayout({
   children,
 }: {

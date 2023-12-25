@@ -1,8 +1,24 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import CopyButton from "../../../components/copyButton";
 import DownloadButton from "../../../components/donwloadButton";
+import { getCountryData } from "countries-list";
+import countries3to2 from "countries-list/minimal/countries.3to2.min.json";
 
 const appOrigin = "*"; //"https://d8qn3zfqpd0bq.cloudfront.net"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  // read route params
+  const countryData = getCountryData(countries3to2[params.id]);
+  const title = `${countryData.name} Border Shapefile | ${countryData.native} GeoJSON Geometry Vector File for GIS | ShapeFinder`;
+  return {
+    title: title,
+  };
+}
 
 export default async function Results({ params }: { params: { id: string } }) {
   const response = await fetch(
