@@ -10,20 +10,24 @@ export default function DownloadButton({ message }: { message: string }) {
 
   const [active, setActive] = useState(false);
   return (
-    <button
+    <a
       onClick={() => {
         setActive(true);
       }}
+      download={`${usePathname().slice(1).toUpperCase()}.geojson`}
+      target="_blank"
+      rel="noreferrer"
+      href={URL.createObjectURL(file)}
       className="bg-blue-500 text-white shadow-md rounded-full h-14 w-14 text-lg hover:bg-blue-600"
     >
-      <a
-        download={`${usePathname().slice(1).toUpperCase()}.geojson`}
-        target="_blank"
-        rel="noreferrer"
-        href={URL.createObjectURL(file)}
+      <button
+        onClick={() => {
+          setActive(true);
+        }}
+        className="bg-blue-500 text-white shadow-md rounded-full h-14 w-14 text-lg hover:bg-blue-600"
       >
         <FontAwesomeIcon icon={active ? faDownload : faDownload} />
-      </a>
-    </button>
+      </button>
+    </a>
   );
 }
