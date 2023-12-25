@@ -17,6 +17,7 @@ export async function generateMetadata({
   const title = `${countryData.name} Border Shapefile | ${countryData.native} GeoJSON Geometry Vector File for GIS | ShapeFinder`;
   return {
     title: title,
+    description: `Download or directly copy the border of ${countryData.name} to use in GIS or other projects. The border is offered as a GeoJSON.`,
   };
 }
 
