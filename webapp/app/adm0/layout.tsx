@@ -11,9 +11,7 @@ export default function SearchLayout({ children }) {
   const [country, setCountry] = useState<Country["value"]>("BEL");
 
   return (
-    <div
-      className={"w-screen h-screen flex flex-col fixed items-center top-72"}
-    >
+    <div className={"w-screen flex flex-col items-center mt-40"}>
       <div className="w-96 px-5">
         <div className="flex flex-row">
           <div className="basis-3/4">
