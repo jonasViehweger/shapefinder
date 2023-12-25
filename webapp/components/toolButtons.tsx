@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy as fasCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCopy as farCopy } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 
-export default function DownloadButton({ message }: { message: string }) {
+export function DownloadButton({ message }: { message: string }) {
   const file = new Blob([message], { type: "text/plain" });
 
   const [active, setActive] = useState(false);
@@ -18,16 +20,30 @@ export default function DownloadButton({ message }: { message: string }) {
       target="_blank"
       rel="noreferrer"
       href={URL.createObjectURL(file)}
-      className="bg-blue-500 text-white shadow-md rounded-full h-14 w-14 text-lg hover:bg-blue-600"
     >
       <button
         onClick={() => {
           setActive(true);
         }}
-        className="bg-blue-500 text-white shadow-md rounded-full h-14 w-14 text-lg hover:bg-blue-600"
+        className="btn-tool"
       >
         <FontAwesomeIcon icon={active ? faDownload : faDownload} />
       </button>
     </a>
+  );
+}
+
+export function CopyButton({ message }: { message: string }) {
+  const [active, setActive] = useState(false);
+  return (
+    <button
+      onClick={() => {
+        navigator.clipboard.writeText(message);
+        setActive(true);
+      }}
+      className="btn-tool"
+    >
+      <FontAwesomeIcon icon={active ? fasCopy : farCopy} />
+    </button>
   );
 }

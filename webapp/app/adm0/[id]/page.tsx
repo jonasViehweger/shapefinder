@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
-import CopyButton from "../../../components/copyButton";
-import DownloadButton from "../../../components/donwloadButton";
+import { CopyButton, DownloadButton } from "../../../components/toolButtons";
 import { getCountryData } from "countries-list";
 import countries3to2 from "countries-list/minimal/countries.3to2.min.json";
 
