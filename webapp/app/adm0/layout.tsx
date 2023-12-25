@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import CountrySelector from "../../components/selector";
-import { COUNTRIES, Country, Countries } from "../../lib/countries";
+import { COUNTRIES, Country } from "../../lib/countries";
 
 export default function SearchLayout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
