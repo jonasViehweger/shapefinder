@@ -1,6 +1,8 @@
 import { COUNTRIES, Country } from "../lib/countries";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import { getEmojiFlag } from "countries-list";
+import countries3to2 from "countries-list/minimal/countries.3to2.min.json";
 
 export interface CountrySelectorProps {
   id: string;
@@ -58,11 +60,9 @@ export default function CountrySelector({
           disabled={disabled}
         >
           <span className="truncate flex items-center">
-            <img
-              alt={`${selectedValue.value}`}
-              src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${selectedValue.value}.svg`}
-              className={"inline mr-2 h-4 rounded-sm"}
-            />
+            <i className={"mr-2 mb-1 h-4"}>
+              {getEmojiFlag(countries3to2[selectedValue.value])}
+            </i>
             {selectedValue.title}
           </span>
           <span
@@ -140,11 +140,9 @@ export default function CountrySelector({
                           onToggle();
                         }}
                       >
-                        <img
-                          alt={`${value.value}`}
-                          src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${value.value}.svg`}
-                          className={"inline mr-2 h-4 rounded-sm"}
-                        />
+                        <i className={"mr-2 mb-1 h-4"}>
+                          {getEmojiFlag(countries3to2[value.value])}
+                        </i>
 
                         <span className="font-normal truncate">
                           {value.title}
