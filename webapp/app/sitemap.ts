@@ -1,13 +1,15 @@
 import { MetadataRoute } from "next";
-import { COUNTRIES } from "../lib/countries";
+import { geomCategories } from "../lib/geomCategories";
 
-const root = "localhost:3000/";
+const root = "localhost:3000";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const adm0 = COUNTRIES.map((country) => {
-    return {
-      url: `${root}adm0/${country.value}`,
-    };
+  const urls = geomCategories.flatMap((category) => {
+    return category.idLookup.map((item) => {
+      return {
+        url: `${root}/${category.geomCategory}/${item.id}`,
+      };
+    });
   });
-  return [...adm0, { url: `${root}adm0/` }];
+  return urls;
 }

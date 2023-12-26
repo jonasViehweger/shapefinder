@@ -56,6 +56,18 @@ Resources:
             RestApiId: !Ref BorderApi
             Path: /adm0
             Method: GET
+        Adm1:
+          Type: Api
+          Properties:
+            RestApiId: !Ref BorderApi
+            Path: /adm1
+            Method: GET
+        Org:
+          Type: Api
+          Properties:
+            RestApiId: !Ref BorderApi
+            Path: /org
+            Method: GET
         # Powertools for AWS Lambda (Python) env vars: https://awslabs.github.io/aws-lambda-powertools-python/#environment-variables
       Environment:
         Variables:

@@ -1,16 +1,17 @@
-import { COUNTRIES, Country } from "../lib/countries";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { getEmojiFlag } from "countries-list";
 import countries3to2 from "countries-list/minimal/countries.3to2.min.json";
+import { IdLookup, IdLookupList } from "../lib/geomCategories";
 
 export interface CountrySelectorProps {
   id: string;
   open: boolean;
   disabled?: boolean;
   onToggle: () => void;
-  onChange: (value: Country["value"]) => void;
-  selectedValue: Country | undefined;
+  onChange: (id: IdLookup["id"]) => void;
+  selectedValue: IdLookup | undefined;
+  lookup: IdLookupList;
 }
 
 export default function CountrySelector({
@@ -20,6 +21,7 @@ export default function CountrySelector({
   onToggle,
   onChange,
   selectedValue,
+  lookup,
 }: CountrySelectorProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -61,7 +63,7 @@ export default function CountrySelector({
         >
           <span className="truncate flex items-center">
             <i className={"mr-2 mb-1 h-4"}>
-              {getEmojiFlag(countries3to2[selectedValue.value])}
+              {/* {getEmojiFlag(countries3to2[selectedValue.id])} */}
             </i>
             {selectedValue.title}
           </span>
@@ -118,55 +120,59 @@ export default function CountrySelector({
                   "max-h-64 scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-600 scrollbar-thumb-rounded scrollbar-thin overflow-y-scroll"
                 }
               >
-                {COUNTRIES.filter((country) =>
+                {lookup.filter((country) =>
                   country.title.toLowerCase().startsWith(query.toLowerCase())
                 ).length === 0 ? (
                   <li className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9">
                     No countries found
                   </li>
                 ) : (
-                  COUNTRIES.filter((country) =>
-                    country.title.toLowerCase().startsWith(query.toLowerCase())
-                  ).map((value, index) => {
-                    return (
-                      <li
-                        key={`${id}-${index}`}
-                        className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 flex items-center hover:bg-gray-50 transition"
-                        id="listbox-option-0"
-                        role="option"
-                        onClick={() => {
-                          onChange(value.value);
-                          setQuery("");
-                          onToggle();
-                        }}
-                      >
-                        <i className={"mr-2 mb-1 h-4"}>
-                          {getEmojiFlag(countries3to2[value.value])}
-                        </i>
+                  lookup
+                    .filter((country) =>
+                      country.title
+                        .toLowerCase()
+                        .startsWith(query.toLowerCase())
+                    )
+                    .map((value, index) => {
+                      return (
+                        <li
+                          key={`${id}-${index}`}
+                          className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 flex items-center hover:bg-gray-50 transition"
+                          id="listbox-option-0"
+                          role="option"
+                          onClick={() => {
+                            onChange(value.id);
+                            setQuery("");
+                            onToggle();
+                          }}
+                        >
+                          <i className={"mr-2 mb-1 h-4"}>
+                            {getEmojiFlag(countries3to2[value.id])}
+                          </i>
 
-                        <span className="font-normal truncate">
-                          {value.title}
-                        </span>
-                        {value.value === selectedValue.value ? (
-                          <span className="text-blue-600 absolute inset-y-0 right-0 flex items-center pr-8">
-                            <svg
-                              className="h-5 w-5"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
+                          <span className="font-normal truncate">
+                            {value.title}
                           </span>
-                        ) : null}
-                      </li>
-                    );
-                  })
+                          {value.id === selectedValue.id ? (
+                            <span className="text-blue-600 absolute inset-y-0 right-0 flex items-center pr-8">
+                              <svg
+                                className="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          ) : null}
+                        </li>
+                      );
+                    })
                 )}
               </div>
             </motion.ul>

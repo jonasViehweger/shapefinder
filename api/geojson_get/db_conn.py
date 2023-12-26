@@ -38,12 +38,35 @@ class Database:
             self.cur.execute(query, [id])
             return self.cur.fetchone()[0]
 
-    def get_list(self):
+    def get_adm0_list(self):
         query = sql.SQL("""
             SELECT json_agg(json_build_object(
                 'title', english_name,
                 'value', id
             )) FROM adm0;
+            """)
+        with self.conn.transaction():
+            self.cur.execute(query)
+            return self.cur.fetchone()[0]
+        
+    def get_adm1_list(self):
+        query = sql.SQL("""
+            SELECT json_agg(json_build_object(
+                'title', name,
+                'value', id,
+                'adm0', adm0_id
+            )) FROM adm1;
+            """)
+        with self.conn.transaction():
+            self.cur.execute(query)
+            return self.cur.fetchone()[0]
+        
+    def get_org_list(self):
+        query = sql.SQL("""
+            SELECT json_agg(json_build_object(
+                'title', name,
+                'value', id
+            )) FROM Organizations;
             """)
         with self.conn.transaction():
             self.cur.execute(query)
